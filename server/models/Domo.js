@@ -1,37 +1,41 @@
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-const _ = require('underscore');
 
 let DomoModel = {};
 
 // convert string id to mongo id
 const convertId = mongoose.Types.ObjectId;
-const setName = (name) => _.escape(name).trim();
 
 const DomoSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-    set: setName,
-  },
-
   age: {
     type: Number,
     min: 0,
     required: true,
   },
 
+  createdDate: {
+    type: Date,
+    default: Date.now,
+  },
+
+  color: {
+    type: String,
+    trim: true,
+  },
+
+  x: {
+    type: Number,
+  },
+
+  y: {
+    type: Number,
+  },
+
   owner: {
     type: mongoose.Schema.ObjectId,
     required: true,
     ref: 'Account',
-  },
-
-  createdData: {
-    type: Date,
-    default: Date.now,
   },
 });
 

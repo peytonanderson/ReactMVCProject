@@ -2,16 +2,15 @@
 
 var handleDomo = function handleDomo(e) {
   e.preventDefault();
+  var serializedForm = $("#domoForm").serialize();
+  serializedForm = "".concat(serializedForm, "&x=").concat(e.clientX, "&y=").concat(e.clientY);
+  console.log('x:' + e.clientX + ', y:' + e.clientY);
+  console.log(e);
+  console.log(serializedForm);
   $("#domoMessage").animate({
     width: 'hide'
   }, 350);
-
-  if ($("#domoName").val() == '' || $("#domoAge").val() == '') {
-    handleError("RAWR! All fields are required");
-    return false;
-  }
-
-  sendAjax('POST', $("#domoForm").attr("action"), $("#domoForm").serialize(), function () {
+  sendAjax('POST', $("#domoForm").attr("action"), serializedForm, function () {
     loadDomosFromServer();
   });
   return false;
@@ -20,34 +19,21 @@ var handleDomo = function handleDomo(e) {
 var DomoForm = function DomoForm(props) {
   return /*#__PURE__*/React.createElement("form", {
     id: "domoForm",
-    onSubmit: handleDomo,
     name: "domoForm",
-    action: "/maker",
-    method: "POST",
     className: "domoForm"
-  }, /*#__PURE__*/React.createElement("label", {
-    htmlFor: "name"
-  }, "Name: "), /*#__PURE__*/React.createElement("input", {
-    id: "domoName",
-    type: "text",
-    name: "name",
-    placeholder: "Domo Name"
-  }), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "age"
-  }, "Age: "), /*#__PURE__*/React.createElement("input", {
-    id: "domoAge",
-    type: "text",
-    name: "age",
-    placeholder: "Domo Age"
-  }), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("input", {
     type: "hidden",
     name: "_csrf",
     value: props.csrf
   }), /*#__PURE__*/React.createElement("input", {
+    type: "image",
+    onClick: handleDomo,
     className: "makeDomoSubmit",
-    type: "submit",
-    value: "Make Domo"
-  }));
+    action: "/maker",
+    method: "POST",
+    src: "/assets/img/flowericon.png",
+    alt: "ground"
+  }), /*#__PURE__*/React.createElement("p", null, "Plant flower ^"));
 };
 
 var DomoList = function DomoList(props) {
@@ -56,7 +42,7 @@ var DomoList = function DomoList(props) {
       className: "domoList"
     }, /*#__PURE__*/React.createElement("h3", {
       className: "emptyDomo"
-    }, "No Domos yet"));
+    }, "No flowers yet"));
   }
 
   var domoNodes = props.domos.map(function (domo) {
@@ -64,14 +50,12 @@ var DomoList = function DomoList(props) {
       key: domo._id,
       className: "domo"
     }, /*#__PURE__*/React.createElement("img", {
-      src: "/assets/img/domoface.jpeg",
-      alt: "domo face",
+      src: "/assets/img/flowericon.png",
+      alt: "flower icon",
       className: "domoFace"
     }), /*#__PURE__*/React.createElement("h3", {
-      className: "domoName"
-    }, " Name: ", domo.name, " "), /*#__PURE__*/React.createElement("h3", {
       className: "domoAge"
-    }, " Age: ", domo.age, " "));
+    }, " Time until grown: ", 5 - domo.age, " minutes"));
   });
   return /*#__PURE__*/React.createElement("div", {
     className: "domoList"

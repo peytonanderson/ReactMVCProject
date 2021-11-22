@@ -2,6 +2,13 @@ const models = require('../models');
 
 const { Domo } = models;
 
+const colors = {
+  PINK: 'pink',
+  BLUE: 'blue',
+  YELLOW: 'yellow',
+  ORANGE: 'orange',
+};
+
 const makerPage = (req, res) => {
   Domo.DomoModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
@@ -14,13 +21,12 @@ const makerPage = (req, res) => {
 };
 
 const makeDomo = (req, res) => {
-  if (!req.body.name || !req.body.age) {
-    return res.status(400).json({ error: 'RAWR! Both name and age are required' });
-  }
-
   const domoData = {
-    name: req.body.name,
-    age: req.body.age,
+    age: 0,
+    createdDate: Date.now(),
+    color: colors[Object.keys(colors)[Math.floor(Math.random() * Object.keys(colors).length)]],
+    x: req.body.x,
+    y: req.body.y,
     owner: req.session.account._id,
   };
 
@@ -42,16 +48,14 @@ const makeDomo = (req, res) => {
   return domoPromise;
 };
 
-const getDomos = (req, res) => {
-    return Domo.DomoModel.findByOwner(req.session.account._id, (err, docs) => {
-        if (err) {
-            console.log(err);
-            return res.status(400).json({ error: 'An error occurred' });
-        }
+const getDomos = (req, res) => Domo.DomoModel.findByOwner(req.session.account._id, (err, docs) => {
+  if (err) {
+    console.log(err);
+    return res.status(400).json({ error: 'An error occurred' });
+  }
 
-        return res.json({ domos: docs });
-    });
-};
+  return res.json({ domos: docs });
+});
 
 module.exports.makerPage = makerPage;
 module.exports.make = makeDomo;
