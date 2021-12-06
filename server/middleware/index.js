@@ -12,13 +12,6 @@ const requiresLogout = (req, res, next) => {
   return next();
 };
 
-const requiresPassword = (req, res, next) => {
-  if (req.session.account) {
-    return res.redirect('/password');
-  }
-  return next();
-};
-
 const requiresSecure = (req, res, next) => {
   if (req.headers['x-forwarded-proto'] !== 'https') {
     return res.redirect(`https://${req.hostname}${req.url}`);
@@ -32,7 +25,6 @@ const bypassSecure = (req, res, next) => {
 
 module.exports.requiresLogin = requiresLogin;
 module.exports.requiresLogout = requiresLogout;
-module.exports.requiresPassword = requiresPassword;
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.requiresSecure = requiresSecure;

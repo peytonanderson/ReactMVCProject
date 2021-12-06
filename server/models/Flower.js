@@ -2,21 +2,21 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-let DomoModel = {};
+let FlowerModel = {};
 
 // convert string id to mongo id
 const convertId = mongoose.Types.ObjectId;
 
-const DomoSchema = new mongoose.Schema({
+const FlowerSchema = new mongoose.Schema({
   age: {
     type: Number,
-    min: 0,
+    min: 0.0,
     required: true,
   },
 
   createdDate: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
   },
 
   color: {
@@ -39,20 +39,20 @@ const DomoSchema = new mongoose.Schema({
   },
 });
 
-DomoSchema.statics.toAPI = (doc) => ({
+FlowerSchema.statics.toAPI = (doc) => ({
   name: doc.name,
   age: doc.age,
 });
 
-DomoSchema.statics.findByOwner = (ownerId, callback) => {
+FlowerSchema.statics.findByOwner = (ownerId, callback) => {
   const search = {
     owner: convertId(ownerId),
   };
 
-  return DomoModel.find(search).select('name age').lean().exec(callback);
+  return FlowerModel.find(search).select('name age color x y').lean().exec(callback);
 };
 
-DomoModel = mongoose.model('Domo', DomoSchema);
+FlowerModel = mongoose.model('Flower', FlowerSchema);
 
-module.exports.DomoModel = DomoModel;
-module.exports.DomoSchema = DomoSchema;
+module.exports.FlowerModel = FlowerModel;
+module.exports.FlowerSchema = FlowerSchema;

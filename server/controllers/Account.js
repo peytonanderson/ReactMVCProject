@@ -58,8 +58,13 @@ const changePassword = (req, res) => {
     return res.status(400).json({ error: 'Passwords is already in use' });
   }
   currentUser.password = req.body.pass;
+
   return false;
 };
+
+const buyPage = (req, res) => {
+    res.render('buy', { csrfToken: req.csrfToken() });
+}
 
 const signup = (req, res) => {
   // cast to strings to cover up some security flaws
@@ -117,5 +122,6 @@ module.exports.login = login;
 module.exports.logout = logout;
 module.exports.passwordPage = passwordPage;
 module.exports.changePassword = changePassword;
+module.exports.buyPage = buyPage;
 module.exports.signup = signup;
 module.exports.getToken = getToken;

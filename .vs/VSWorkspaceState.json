@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\client",
+    "\\client\\app",
+    "\\hosted",
+    "\\hosted\\img",
+    "\\server",
+    "\\server\\controllers",
+    "\\server\\middleware",
+    "\\server\\models",
+    "\\views",
+    "\\views\\layouts"
+  ],
+  "SelectedNode": "\\client\\app\\maker.js",
+  "PreviewInSolutionExplorer": false
+}

@@ -1,7 +1,7 @@
 const handleLogin = (e) => {
     e.preventDefault();
 
-    $("#domoMessage").animate({ width: 'hide' }, 350);
+    $("#flowerMessage").animate({ width: 'hide' }, 350);
 
     if ($("#user").val() == '' || $("#pass").val() == '') {
         handleError("RAWR! Username or password is empty");
@@ -18,7 +18,7 @@ const handleLogin = (e) => {
 const handleSignup = (e) => {
     e.preventDefault();
 
-    $("#domoMessage").animate({ width: 'hide' }, 350);
+    $("#flowerMessage").animate({ width: 'hide' }, 350);
 
     if ($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
         handleError("RAWR! All fields are required");
@@ -31,36 +31,6 @@ const handleSignup = (e) => {
     }
 
     sendAjax('POST', $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
-
-    return false;
-};
-
-const handlePasswordChange = (e) => {
-    e.preventDefault();
-
-    $("#domoMessage").animate({ width: 'hide' }, 350);
-
-    // check if all fields aren't filled out
-    if ($("#pass").val() == '' || $("#pass2").val() == '') {
-        handleError("All fields are required");
-        return false;
-    }
-
-    // check if passwords are the same
-    if ($("#pass").val() != $("#pass2").val()) {
-        handleError("Passwords do not match");
-        return false;
-    }
-
-    // check if new password is already the old one
-    // if not, set password
-    //if (currentUser.password == req.body.pass) {
-    //    return res.status(400).json({ error: 'Passwords is already in use' });
-    //} else {
-    //    currentUser.password = req.body.pass;
-    //    return false;
-    //}
-    sendAjax('POST', $("#passwordChangeForm").attr("action"), $("#passwordChangeForm").serialize(), redirect);
 
     return false;
 };
@@ -104,25 +74,6 @@ const SignupWindow = (props) => {
     );
 };
 
-const PasswordWindow = (props) => {
-    return (
-        <form id="passwordForm"
-            name="passwordChangeForm"
-            onSubmit={handlePasswordChange}
-            action="/passwordChange"
-            method="POST"
-            className="mainForm"
-        >
-            <label htmlFor="pass">Password: </label>
-            <input id="pass" type="password" name="pass" placeholder="password" />
-            <label htmlFor="pass2">Password: </label>
-            <input id="pass2" type="password" name="pass2" placeholder="retype password" />
-            <input type="hidden" name="_csrf" value={props.csrf} />
-            <input className="formSubmit" type="submit" value="Change Password" />
-        </form>
-    );
-};
-
 const createLoginWindow = (csrf) => {
     ReactDOM.render(
         <LoginWindow csrf={csrf} />,
@@ -131,13 +82,6 @@ const createLoginWindow = (csrf) => {
 };
 
 const createSignupWindow = (csrf) => {
-    ReactDOM.render(
-        <SignupWindow csrf={csrf} />,
-        document.querySelector("#content")
-    );
-};
-
-const createPasswordWindow = (csrf) => {
     ReactDOM.render(
         <SignupWindow csrf={csrf} />,
         document.querySelector("#content")

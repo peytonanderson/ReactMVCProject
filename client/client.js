@@ -1,6 +1,9 @@
 const handleError = (message) => {
-  $("#errorMessage").text(message);
-  $("#domoMessage").animate({width:'toggle'},350);
+  //$("#errorMessage").text(message);
+  //$("#flowerMessage").animate({width:'toggle'},350);
+
+  $("#errorText").text(message);
+  //$("#error").animate()
 }
 
 const sendAjax = (action, data) => {
@@ -11,7 +14,7 @@ const sendAjax = (action, data) => {
     data: data,
     dataType: "json",
     success: (result, status, xhr) => {
-      $("#domoMessage").animate({width:'hide'},350);
+      $("#flowerMessage").animate({width:'hide'},350);
 
       window.location = result.redirect;
     },
@@ -27,7 +30,7 @@ $(document).ready(() => {
   $("#signupForm").on("submit", (e) => {
     e.preventDefault();
 
-    $("#domoMessage").animate({width:'hide'},350);
+    $("#flowerMessage").animate({width:'hide'},350);
 
     if($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
       handleError("RAWR! All fields are required");
@@ -47,7 +50,7 @@ $(document).ready(() => {
   $("#loginForm").on("submit", (e) => {
     e.preventDefault();
 
-    $("#domoMessage").animate({width:'hide'},350);
+    $("#flowerMessage").animate({width:'hide'},350);
 
     if($("#user").val() == '' || $("#pass").val() == '') {
       handleError("RAWR! Username or password is empty");
@@ -62,7 +65,7 @@ $(document).ready(() => {
   $("#passwordChangeForm").on("submit", (e) => {
       e.preventDefault();
 
-      $("#domoMessage").animate({ width: 'hide' }, 350);
+      $("#flowerMessage").animate({ width: 'hide' }, 350);
 
       // check if all fields aren't filled out
       if ($("#pass").val() == '' || $("#pass2").val() == '') {
@@ -89,17 +92,21 @@ $(document).ready(() => {
       return false;
   });
   
-  $("#domoForm").on("submit", (e) => {
+  $("#flowerForm").on("submit", (e) => {
     e.preventDefault();
 
-    $("#domoMessage").animate({width:'hide'},350);
+    $("#flowerMessage").animate({width:'hide'},350);
 
-    //if($("#domoName").val() == '' || $("#domoAge").val() == '') {
+    //if($("#flowerName").val() == '' || $("#flowerAge").val() == '') {
     //  handleError("RAWR! All fields are required");
     //  return false;
     //}
 
-    sendAjax($("#domoForm").attr("action"), $("#domoForm").serialize());
+    // send current mouse position
+    $("flowerForm").append('x', 0);
+    $("flowerForm").append('y', 0);
+
+    sendAjax($("#flowerForm").attr("action"), $("#flowerForm").serialize());
 
     return false;
   });

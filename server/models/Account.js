@@ -28,6 +28,10 @@ const AccountSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  seeds: {
+    type: Number,
+    default: 5,
+  },
 });
 
 AccountSchema.statics.toAPI = (doc) => ({
@@ -93,6 +97,12 @@ AccountSchema.statics.findPassword = (username, callback) => {
 
     return username.password;
   });
+};
+
+AccountSchema.statics.useSeed = () => {
+    if (seeds > 0) {
+        seeds--;
+    }
 };
 
 AccountModel = mongoose.model('Account', AccountSchema);
