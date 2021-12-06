@@ -99,12 +99,6 @@ AccountSchema.statics.findPassword = (username, callback) => {
   });
 };
 
-AccountSchema.statics.useSeed = () => {
-    if (seeds > 0) {
-        seeds--;
-    }
-};
-
 AccountModel = mongoose.model('Account', AccountSchema);
 
 module.exports.AccountModel = AccountModel;

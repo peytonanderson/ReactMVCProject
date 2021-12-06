@@ -9,17 +9,12 @@ const colors = {
   ORANGE: 'orange',
 };
 
-let loop;
-
 const makerPage = (req, res) => {
   Flower.FlowerModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
-
-    // start flowers growing
-    loop = setInterval(updateFlowers, 1000, req);
 
     return res.render('app', { csrfToken: req.csrfToken(), flowers: docs });
   });
@@ -63,23 +58,6 @@ const getFlowers = (req, res) => Flower.FlowerModel.findByOwner(
     return res.json({ flowers: docs });
   },
 );
-
-const updateFlowers = (req) => {
-    Flower.FlowerModel.findByOwner(req.session.account._id, (err, docs) => {
-        if (err) {
-            console.log(err);
-            return res.status(400).json({ error: 'An error occurred' });
-        }
-
-        if (docs) {
-            for (let i = 0; i < docs.length; i++) {
-                if (docs[i].age < 100.0) {
-                    docs[i].age += 1;
-                }
-            }
-        }
-    });
-};
 
 module.exports.makerPage = makerPage;
 module.exports.make = makeFlower;

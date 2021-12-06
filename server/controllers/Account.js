@@ -63,8 +63,8 @@ const changePassword = (req, res) => {
 };
 
 const buyPage = (req, res) => {
-    res.render('buy', { csrfToken: req.csrfToken() });
-}
+  res.render('buy', { csrfToken: req.csrfToken() });
+};
 
 const signup = (req, res) => {
   // cast to strings to cover up some security flaws
